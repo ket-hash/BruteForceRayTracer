@@ -133,4 +133,14 @@ inline vec3 refract(const vec3& uv, const vec3& n, float relative_ri){
 	vec3 r_par = -sqrt(1.0-r_per.length_squared())*n;
 	return r_per + r_par;
 }
+
+inline vec3 random_on_unit_disk() {
+	while(true) {
+		auto p = vec3(random_float(-1, 1), random_float(-1,1), 0);
+		if(p.length_squared() < 1){
+			return p;
+		}
+	}
+}
+
 #endif
