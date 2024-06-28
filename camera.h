@@ -80,7 +80,7 @@ class camera {
 
 			if(world.hit(r, interval(1e-3, infinity), rec)){
 				vec3 direction = rec.normal + random_unit_vector();
-				return 0.7*ray_color(ray(rec.p, direction), world, depth - 1);
+				return 0.5*ray_color(ray(rec.p, direction), world, depth - 1);
 			}
 
 			vec3 uv = unit_vector(r.direction());
