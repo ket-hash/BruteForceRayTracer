@@ -2,13 +2,12 @@
 #define SPHERE_H
 
 #include "hittable.h"
-#include "vector.h"
 
 class sphere : public hittable{
 	public:
 		sphere(const point3& centre, float radius) : centre(centre), radius(fmax(0, radius)) {}
 
-		bool hit(const ray& r, float ray_tmin, float ray_tmax, hit_record& rec) const override {
+		bool hit(const ray& r, interval ray_t, hit_record& rec) const override {
 
 			vec3 oc = centre - r.origin();
 			auto a = r.direction().length_squared();
@@ -22,9 +21,9 @@ class sphere : public hittable{
 			auto sqrt_d = sqrt(discriminant);
 
 			auto root = (h - sqrt_d) / a;
-			if (root <= ray_tmin || ray_tmax <= root) {
+			if (!ray_t.surrounds(root)) {
 				root = (h + sqrt_d) / a;
-				if (root <= ray_tmin || ray_tmax <= root)
+				if (!ray_t.surrounds(root))
 					return false;
 			}
 			
