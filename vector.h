@@ -44,7 +44,15 @@ class vec3 {
 		float length_squared() const{
 			return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];
 			}
-	
+		
+		static vec3 random() {
+			return vec3(random_float(), random_float(), random_float());
+		}
+
+		static vec3 random(float min, float max) {
+			return vec3(random_float(min, max), random_float(min, max), random_float(min, max));
+		}
+
 	};
 
 using point3 = vec3;
@@ -90,4 +98,25 @@ inline vec3 cross(const vec3& u, const vec3& v) {
 inline vec3 unit_vector(const vec3& v){
 	return v/v.length();
 }
+
+inline vec3 inside_unit_sphere() {
+	while(true){
+		auto p = vec3::random(-1.0, 1.0);
+		if(p.length_squared() < 1.0){
+			return p;
+		}
+	}
+}
+
+inline vec3 random_unit_vector() {
+	return unit_vector(inside_unit_sphere());
+}
+
+inline vec3 random_on_hemisphere(const vec3& normal){
+	auto uv = random_unit_vector();
+	if (dot(uv, normal) > 0.0)
+		return uv;
+	return -uv;
+}
+
 #endif
