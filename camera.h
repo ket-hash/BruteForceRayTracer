@@ -10,6 +10,8 @@ class camera {
 		int img_width = 100;
 		int samples_per_pixel = 10;
 		int max_depth = 10;
+		
+		float vfov = 90;
 
 		void render(const hittable& world){
 			initialize();
@@ -42,7 +44,9 @@ class camera {
 			//camera
 
 			auto focal_length = 1.0;
-			auto viewport_height = 2.0;
+			auto theta = degrees_to_radians(vfov);
+			auto h = tan(theta/2);
+			auto viewport_height = 2.0*h*focal_length;
 			auto viewport_width = viewport_height * (double(img_width)/img_height);
 			centre = point3(0,0,0);
 			pixel_samples_scale = 1.0 / samples_per_pixel;
