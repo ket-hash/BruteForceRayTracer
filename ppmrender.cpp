@@ -1,7 +1,7 @@
 #include "vector.h"
 #include "color.h"
 #include "rays.h"
-
+#include "sphere.h"
 #include <iostream>
 #include <cmath>
 
