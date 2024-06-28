@@ -68,7 +68,7 @@ class dielectric: public material {
 			float cos_theta = fmin(dot(rec.normal, -unit_direction), 1.0);
 			float sin_theta = sqrt(1-cos_theta*cos_theta);
 			bool cannot_refract = ri * sin_theta > 1.0;
-			if (cannot_refract) {
+			if (cannot_refract || reflectance(cos_theta, ri) > random_float()) {
 				direction = reflect(unit_direction, rec.normal);	
 			} else {
 				direction = refract(unit_direction, rec.normal, ri);
@@ -79,6 +79,11 @@ class dielectric: public material {
 
 	private:
 		float refractive_index;
+		static float reflectance(float cosine, float refractive_index) {
+			auto r0 = (1 - refractive_index) / (1 + refractive_index);
+			r0 = r0*r0;
+			return r0 + (1-r0)*pow((1-cosine), 5);
+		}
 };
 
 #endif
