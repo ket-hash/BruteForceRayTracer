@@ -79,11 +79,11 @@ class dielectric: public material {
 
 	private:
 		float refractive_index;
-		static float reflectance(float cosine, float refractive_index) {
-			auto r0 = (1 - refractive_index) / (1 + refractive_index);
+ 	        static float reflectance(float cosine, float refractive_index){
+			auto r0 = (1.0 - refractive_index) / (1.0 + refractive_index);
 			r0 = r0*r0;
-			return r0 + (1-r0)*pow((1-cosine), 5);
-		}
+			return r0 + (1-r0)*pow((1-cosine),5);
+		}	
 };
 
 #endif
