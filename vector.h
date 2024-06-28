@@ -52,6 +52,10 @@ class vec3 {
 		static vec3 random(float min, float max) {
 			return vec3(random_float(min, max), random_float(min, max), random_float(min, max));
 		}
+		bool near_zero() const {
+			auto s = 1e-8;
+			return(fabs(e[0]) < s, fabs(e[1]) < s, fabs(e[2]) < s);
+		}
 
 	};
 
@@ -119,4 +123,7 @@ inline vec3 random_on_hemisphere(const vec3& normal){
 	return -uv;
 }
 
+inline vec3 reflect(const vec3& v, const vec3& n){
+	return v - 2*dot(v, n)*n;
+}
 #endif

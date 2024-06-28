@@ -10,6 +10,7 @@
 using std::make_shared;
 using std::shared_ptr;
 using std::sqrt;
+using std::fabs;
 
 const float infinity = std::numeric_limits<float>::infinity();
 const float pi = 3.1415926535897932385;
@@ -33,5 +34,6 @@ inline float random_float(float min, float max){
 #include "color.h"
 #include "rays.h"
 #include "vector.h"
+#include "hittable.h"
 
 #endif
