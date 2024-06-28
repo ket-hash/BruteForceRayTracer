@@ -31,11 +31,13 @@ class sphere : public hittable{
 			rec.p = r.at(rec.t);
 			vec3 outward_normal = (rec.p - centre) / radius;
 			rec.set_face_normal(r, outward_normal);
+			rec.mat = mat;
 			return true;
 		}
 	private:
 		point3 centre;
 		float radius;
+		shared_ptr<material> mat;
 	
 };
 
