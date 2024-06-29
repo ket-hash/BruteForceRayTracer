@@ -43,6 +43,7 @@ class sphere : public hittable{
 			rec.p = r.at(rec.t);
 			vec3 outward_normal = (rec.p - centre) / radius;
 			rec.set_face_normal(r, outward_normal);
+			get_uv(outward_normal, rec.u, rec.v);
 			rec.mat = mat;
 			return true;
 		}
@@ -61,6 +62,14 @@ class sphere : public hittable{
 
 		point3 sphere_centre(float time) const {
 			return centre1 + time*centre_vec;
+		}
+
+		static void get_uv(const point3& p, float& u, float& v){
+			auto theta = acos(-p.y());
+			auto phi = atan2(-p.z(), p.x()) + pi;
+
+			u = phi/(2*pi);
+			v = theta/pi;
 		}
 	
 };
