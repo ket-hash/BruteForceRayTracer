@@ -3,6 +3,7 @@
 
 #include "ppmrenderer.h"
 #include "image_util.h"
+#include "perlin.h"
 
 class texture {
 	public:
@@ -65,6 +66,18 @@ class image_texture : public texture{
 	private:
 		rtw_image img;
 
+};
+
+class noise_texture : public texture{
+	public:
+		noise_texture() {}
+
+		color value(float u, float v, const point3& p) const override {
+			return color(1,1,1) * noise.noise(p);
+		}
+
+	private:
+		perlin noise;
 };
 
 #endif

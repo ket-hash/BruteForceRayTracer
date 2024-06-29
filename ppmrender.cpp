@@ -10,6 +10,29 @@
 
 using namespace std;
 
+void perlin_texture() {
+	hittable_list world;
+	auto pertext = make_shared<noise_texture>();
+	world.add(make_shared<sphere>(point3(0,-1000,0), 1000, make_shared<lambertian>(pertext)));
+    	world.add(make_shared<sphere>(point3(0,2,0), 2, make_shared<lambertian>(pertext)));
+
+    	camera cam;
+
+    	cam.aspect_ratio      = 16.0 / 9.0;
+    	cam.img_width       = 400;
+    	cam.samples_per_pixel = 10;
+    	cam.max_depth         = 10;
+
+    	cam.vfov     = 20;
+    	cam.lookfrom = point3(13,2,3);
+    	cam.lookat   = point3(0,0,0);
+    	cam.vup      = vec3(0,1,0);
+
+   	cam.defocus_angle = 0;
+
+	cam.render(world);
+}
+
 void earth() {
 	auto earth_texture = make_shared<image_texture>("grass.jpg");
 	auto earth_surface = make_shared<lambertian>(earth_texture);
@@ -123,10 +146,11 @@ void bouncing_spheres(){
 
 int main(){
 
-	switch(3){
+	switch(4){
 		case 1: bouncing_spheres();
 		case 2: checkered_spheres();	
 		case 3: earth();
+		case 4: perlin_texture();
 	}
 	return 0;
 }
