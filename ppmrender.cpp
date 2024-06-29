@@ -5,6 +5,7 @@
 #include "hittable_list.h"
 #include "hittable.h"
 #include "sphere.h"
+#include "bvh_node.h"
 
 using namespace std;
 
@@ -25,9 +26,11 @@ int main(){
 				if (choose_mat < 0.8){
 					auto albedo = color::random() * color::random();
 					sphere_material = make_shared<lambertian>(albedo);
-					auto centre2 = centre + vec3(0, random_float(0, 0.5), 0);
-					world.add(make_shared<sphere>(centre, centre2, 0.2, sphere_material));
-				} else if (choose_mat > 0.9) {
+					//motion blur shit
+					//auto centre2 = centre + vec3(0, random_float(0, 0.5), 0);
+					//world.add(make_shared<sphere>(centre, centre2, 0.2, sphere_material));
+					world.add(make_shared<sphere>(centre, 0.2, sphere_material));
+					} else if (choose_mat > 0.9) {
 					auto albedo = color::random(0.5, 1);
 					auto fuzz = random_float(0, 0.5);
 					sphere_material = make_shared<metal>(albedo, fuzz);
@@ -48,12 +51,13 @@ int main(){
 
 	auto material3 = make_shared<metal>(color(0.7,0.6,0.5), 0.5);
 	world.add(make_shared<sphere>(point3(4,1,0), 1.0, material3));
-
+	
+	world = hittable_list(make_shared<bvh_node>(world));
 	camera cam;
 
 	cam.aspect_ratio = 16.0/9.0;
 	cam.img_width = 400;
-	cam.samples_per_pixel = 10;
+	cam.samples_per_pixel = 50;
 	
 	cam.vfov = 20;
 	cam.lookfrom = point3(13,2,3);
