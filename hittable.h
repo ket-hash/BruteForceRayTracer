@@ -13,6 +13,8 @@ class hit_record {
 		float t;
 		bool front_face;
 		shared_ptr<material> mat;
+		float u;
+		float v;
 
 		void set_face_normal(const ray& r, const vec3& outward_normal){
 			front_face = dot(r.direction(), outward_normal) < 0.0;

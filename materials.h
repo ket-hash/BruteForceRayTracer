@@ -3,6 +3,8 @@
 
 #include "ppmrenderer.h"
 
+#include "texture.h"
+
 class hit_record;
 
 class material {
@@ -17,7 +19,8 @@ class material {
 
 class lambertian: public material {
 	public:
-		lambertian(const color& albedo): albedo(albedo) {}
+		lambertian(const color& albedo) : tex(make_shared<solid_color>(albedo)) {}
+		lambertian(shared_ptr<texture> tex): tex(tex) {}
 		bool scatter(const ray& ray_in, const hit_record& rec, color& attentuation, ray&scattered) const override {
 			float R = random_float();
 			if (R <= 0.2){
@@ -27,13 +30,13 @@ class lambertian: public material {
 			if (scatter_direction.near_zero())
 				scatter_direction = rec.normal;
 			scattered = ray(rec.p, scatter_direction, ray_in.time());
-			attentuation = albedo/(0.8);
+			attentuation = tex->value(rec.u, rec.v, rec.p)/(0.8);
 			return true;
 		}
 
 
 	private:
-		color albedo;
+		shared_ptr<texture> tex;
 };
 
 class metal: public material {
