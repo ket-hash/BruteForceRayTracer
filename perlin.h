@@ -45,6 +45,20 @@ class perlin {
 			return perlin_interpolation(c, u, v, w);
 		}
 
+		float turb(const point3& p, int depth) const {
+			float weight = 1.0;
+			auto temp_p = p;
+			float acc = 0.0;
+
+			for (int i = 0; i < depth; i++){
+				acc += weight * noise(temp_p);
+				weight *= 0.5;
+				temp_p *= 2.0;
+			}
+
+			return fabs(acc);
+		}
+
 	private:
 		static const int point_count = 256;
 		vec3* randvec;
