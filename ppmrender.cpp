@@ -12,7 +12,7 @@ using namespace std;
 
 void perlin_texture() {
 	hittable_list world;
-	auto pertext = make_shared<noise_texture>();
+	auto pertext = make_shared<noise_texture>(4);
 	world.add(make_shared<sphere>(point3(0,-1000,0), 1000, make_shared<lambertian>(pertext)));
     	world.add(make_shared<sphere>(point3(0,2,0), 2, make_shared<lambertian>(pertext)));
 
@@ -20,7 +20,7 @@ void perlin_texture() {
 
     	cam.aspect_ratio      = 16.0 / 9.0;
     	cam.img_width       = 400;
-    	cam.samples_per_pixel = 500;
+    	cam.samples_per_pixel = 50;
     	cam.max_depth         = 50;
 
     	cam.vfov     = 20;
