@@ -41,7 +41,11 @@ class perlin {
 			auto u = p.x() - floor(p.x());
 			auto v = p.y() - floor(p.y());
 			auto w = p.z() - floor(p.z());
-		
+			
+			u = u*u*(3 - 2*u);
+			v = v*v*(3 - 2*v);
+			w = w*w*(3 - 2*w);
+
 			return trilinear_interpolation(c, u, v, w);
 		}
 
@@ -77,7 +81,7 @@ class perlin {
 			for (int i = 0; i < 2; i++){
 				for(int j = 0; j < 2; j++){
 					for(int k = 0; k < 2; k++){
-						ac += (i*u + (1-i)*(1-u)) * (j*v + (1-j)*(1-j)) * (k*w + (1-k)*(1-w)) * c[i][j][k]; 
+						ac += (i*u + (1-i)*(1-u)) * (j*v + (1-j)*(1-v)) * (k*w + (1-k)*(1-w)) * c[i][j][k]; 
 					}
 				}
 			}
